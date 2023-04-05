@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-deployment
+  name: db-deployment
   namespace: rvogt
   labels:
-    app: app
+    app: db
 spec:
   replicas: 1
   strategy:
@@ -12,17 +12,17 @@ spec:
   minReadySeconds: 20
   selector:
     matchLabels:
-      app: app
+      app: db
   template:
     metadata:
       labels:
-        app: app
+        app: db
     spec:
       containers:
       - envFrom:
         - secretRef:
             name: db-secret
-        name: app-deployment
-        image: harbor.dev.afsmtddso.com/rich-vogt-harbor/app@sha256:2fc09f79a543445c7af909389dd833752651d4646d1246b80ea9716d645dd95d
+        name: db-deployment
+        image: harbor.dev.afsmtddso.com/rich-vogt-harbor/db@sha256:9d3a505005fbc13d8c76ba5ffb49cee83843f80ab10bf2cdccf042fd5dd66918
         ports:
-        - containerPort: 5000
+        - containerPort: 5432
